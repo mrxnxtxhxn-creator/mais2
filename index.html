@@ -1,9 +1,10 @@
+```html
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KUEHNE+NAGEL | Automação Pós-Sorting & Analytics</title>
+    <title>Mercado Livre & Kuehne+Nagel | Central de Reatribuição</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -11,13 +12,16 @@
             theme: {
                 extend: {
                     colors: {
+                        meli: {
+                            yellow: '#FFE600',
+                            blue: '#3483FA',
+                            dark: '#333333'
+                        },
                         kn: {
                             navy: '#003366',
                             blue: '#004B93',
-                            light: '#F8FAFC',
-                            surface: '#FFFFFF',
-                            border: '#E2E8F0',
-                            accent: '#0055A5'
+                            light: '#F5F7FA',
+                            border: '#E0E0E0'
                         }
                     }
                 }
@@ -31,425 +35,528 @@
 </head>
 <body class="bg-kn-light flex h-screen overflow-hidden font-sans text-slate-800">
 
-    <!-- ================= SIDEBAR CORPORATIVA (KUEHNE+NAGEL) ================= -->
-    <aside class="w-64 bg-kn-navy text-white flex flex-col justify-between z-20 shadow-xl flex-shrink-0">
-        <div class="flex-1 flex flex-col overflow-hidden">
-            <div class="p-5 border-b border-white/10 flex items-center justify-between bg-[#002850]">
-                <div class="flex items-center space-x-3">
-                    <svg class="w-8 h-8 text-white flex-shrink-0" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="8">
-                        <circle cx="50" cy="50" r="42" />
-                        <line x1="50" y1="20" x2="50" y2="72" />
-                        <circle cx="50" cy="28" r="6" fill="currentColor" />
-                        <path d="M26 62 C 26 78, 74 78, 74 62" stroke-width="8" />
-                    </svg>
-                    <div class="flex flex-col">
-                        <span class="font-bold tracking-wider text-xs leading-tight">KUEHNE+NAGEL</span>
-                        <span class="text-[9px] text-slate-300 tracking-widest uppercase font-semibold">Control Tower + Pandas</span>
-                    </div>
+    <!-- ================= SIDEBAR EXATA DA IMAGEM ================= -->
+    <aside class="w-64 bg-kn-navy text-white flex flex-col justify-between z-20 shadow-lg flex-shrink-0">
+        <div>
+            <!-- Header Logo -->
+            <div class="p-4 border-b border-white/10 flex items-center space-x-2 bg-[#002850]">
+                <div class="bg-meli-yellow text-slate-900 font-black p-1.5 rounded text-xs flex items-center shadow-sm">
+                    <span class="tracking-tighter">Mercado</span>
+                    <span class="text-blue-600 ml-0.5">Livre</span>
                 </div>
+                <span class="text-slate-300 font-bold text-xs">| KUEHNE+NAGEL</span>
             </div>
 
-            <nav id="nav-menu" class="p-3 space-y-1.5 text-xs overflow-y-auto flex-1">
-                <div class="text-[9px] text-slate-400 font-bold uppercase tracking-wider px-3 pb-1 pt-2">Operação Last Mile</div>
-                
-                <button onclick="mudarAba('operacao')" id="btn-aba-operacao" class="w-full flex items-center space-x-3 p-3 rounded-lg bg-kn-blue text-white transition shadow-sm font-medium">
-                    <i data-lucide="scan-barcode" class="w-4 h-4"></i>
-                    <span>Bipagem Inteligente</span>
+            <!-- Menu de Navegação -->
+            <nav id="nav-menu" class="p-3 space-y-1 text-xs">
+                <button onclick="mudarAba('dashboard')" id="btn-aba-dashboard" class="w-full flex items-center space-x-3 p-3 rounded-lg bg-blue-600 text-white font-medium transition shadow-sm">
+                    <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
+                    <span>Dashboard</span>
                 </button>
 
-                <button onclick="mudarAba('rotas')" id="btn-aba-rotas" class="w-full flex items-center space-x-3 p-3 rounded-lg hover:bg-white/5 text-slate-300 hover:text-white transition font-medium">
-                    <i data-lucide="truck" class="w-4 h-4"></i>
-                    <span>Resumo por Rota</span>
+                <button onclick="mudarAba('consultar')" id="btn-aba-consultar" class="w-full flex items-center space-x-3 p-3 rounded-lg hover:bg-white/10 text-slate-300 hover:text-white font-medium transition">
+                    <i data-lucide="search" class="w-4 h-4"></i>
+                    <span>Consultar ID</span>
                 </button>
 
-                <button onclick="mudarAba('python-engine')" id="btn-aba-python-engine" class="w-full flex items-center space-x-3 p-3 rounded-lg hover:bg-white/5 text-slate-300 hover:text-white transition font-medium">
-                    <i data-lucide="cpu" class="w-4 h-4 text-emerald-400"></i>
-                    <span>Pipeline Python (Pandas)</span>
+                <button onclick="mudarAba('reatribuicao')" id="btn-aba-reatribuicao" class="w-full flex items-center space-x-3 p-3 rounded-lg hover:bg-white/10 text-slate-300 hover:text-white font-medium transition">
+                    <i data-lucide="refresh-cw" class="w-4 h-4"></i>
+                    <span>Reatribuição</span>
                 </button>
 
-                <div class="text-[9px] text-slate-400 font-bold uppercase tracking-wider px-3 pb-1 pt-5">Business Intelligence</div>
-                
-                <button onclick="mudarAba('graficos-geral')" id="btn-aba-graficos-geral" class="w-full flex items-center space-x-3 p-3 rounded-lg hover:bg-white/5 text-slate-300 hover:text-white transition font-medium">
-                    <i data-lucide="pie-chart" class="w-4 h-4"></i>
-                    <span>Visão Comparativa</span>
+                <button onclick="mudarAba('problemsolving')" id="btn-aba-problemsolving" class="w-full flex items-center space-x-3 p-3 rounded-lg hover:bg-white/10 text-slate-300 hover:text-white font-medium transition">
+                    <i data-lucide="alert-triangle" class="w-4 h-4"></i>
+                    <span>Problem Solving</span>
+                </button>
+
+                <button onclick="mudarAba('performance')" id="btn-aba-performance" class="w-full flex items-center space-x-3 p-3 rounded-lg hover:bg-white/10 text-slate-300 hover:text-white font-medium transition">
+                    <i data-lucide="bar-chart-3" class="w-4 h-4"></i>
+                    <span>Performance</span>
+                </button>
+
+                <button onclick="mudarAba('historico')" id="btn-aba-historico" class="w-full flex items-center space-x-3 p-3 rounded-lg hover:bg-white/10 text-slate-300 hover:text-white font-medium transition">
+                    <i data-lucide="clock" class="w-4 h-4"></i>
+                    <span>Histórico</span>
+                </button>
+
+                <button onclick="mudarAba('configuracoes')" id="btn-aba-configuracoes" class="w-full flex items-center space-x-3 p-3 rounded-lg hover:bg-white/10 text-slate-300 hover:text-white font-medium transition">
+                    <i data-lucide="settings" class="w-4 h-4"></i>
+                    <span>Configurações</span>
                 </button>
             </nav>
         </div>
 
-        <div class="p-4 border-t border-white/10 text-[11px] text-slate-300 text-center flex flex-col items-center justify-center space-y-1 bg-[#002850]">
-            <i data-lucide="code-2" class="w-4 h-4 text-sky-400 mb-0.5"></i>
-            <span class="font-semibold tracking-wide text-white">Desenvolvido por Nathan</span>
-            <span class="text-[9px] text-slate-400">Logistics Systems v3.0 (Py)</span>
+        <div class="p-4 border-t border-white/10 text-[11px] text-slate-400 bg-[#002850] space-y-1">
+            <p class="font-medium text-slate-200">Juntos entregamos um amanhã melhor.</p>
         </div>
     </aside>
 
     <!-- ================= CONTEÚDO PRINCIPAL ================= -->
-    <main class="flex-1 flex flex-col overflow-y-auto bg-slate-50">
+    <main class="flex-1 flex flex-col overflow-hidden bg-slate-100">
         
-        <header class="bg-white border-b border-kn-border px-8 py-4 flex flex-wrap items-center justify-between sticky top-0 z-10 shadow-sm gap-4">
-            <div>
-                <h1 class="text-base font-bold text-kn-navy tracking-tight flex items-center gap-2">
-                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                    Automação Pós-Sorting & Análise de Dados
-                </h1>
-                <p class="text-xs text-slate-500">Módulo Integrado JavaScript + Python Pandas Analytics</p>
+        <!-- Topo da Aplicação -->
+        <header class="bg-white border-b border-slate-200 px-6 py-3.5 flex items-center justify-between shadow-sm z-10">
+            <div class="flex items-center space-x-4">
+                <div>
+                    <h1 class="text-base font-extrabold text-slate-900 tracking-tight">Central de Reatribuição</h1>
+                    <p class="text-xs text-slate-500">Gestão operacional de pacotes</p>
+                </div>
             </div>
             
-            <div class="flex items-center space-x-2 flex-wrap gap-y-2">
-                <div class="flex items-center bg-slate-100 p-1 rounded-lg border border-slate-200 space-x-1">
-                    <button onclick="exportarCSV('AM')" class="hover:bg-sky-500 hover:text-white text-slate-700 bg-white px-2.5 py-1.5 rounded text-xs font-semibold flex items-center space-x-1 transition">
-                        <i data-lucide="sun" class="w-3.5 h-3.5 text-amber-500"></i>
-                        <span>CSV AM</span>
-                    </button>
-                    <button onclick="exportarCSV('PM')" class="hover:bg-indigo-600 hover:text-white text-slate-700 bg-white px-2.5 py-1.5 rounded text-xs font-semibold flex items-center space-x-1 transition">
-                        <i data-lucide="moon" class="w-3.5 h-3.5 text-indigo-500"></i>
-                        <span>CSV PM</span>
-                    </button>
+            <div class="flex items-center space-x-4">
+                <div class="text-right">
+                    <span class="text-[10px] text-slate-400 block uppercase font-bold tracking-wider flex items-center justify-end gap-1">
+                        <i data-lucide="refresh-cw" class="w-3 h-3"></i> Atualizado em:
+                    </span>
+                    <span class="text-xs font-bold text-slate-700 font-mono">05/09/2026 15:42</span>
                 </div>
-                <button onclick="limparBase()" class="bg-white border border-rose-200 text-rose-600 hover:bg-rose-50 px-3 py-2 rounded-lg text-xs font-semibold flex items-center space-x-1.5 transition">
-                    <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
-                    <span>Zerar Dados</span>
-                </button>
+                <div class="flex items-center space-x-2 border-l pl-4 border-slate-200">
+                    <button class="p-2 hover:bg-slate-100 rounded-lg text-slate-600 transition"><i data-lucide="settings" class="w-4 h-4"></i></button>
+                    <button class="p-2 hover:bg-slate-100 rounded-lg text-slate-600 transition"><i data-lucide="x" class="w-4 h-4"></i></button>
+                </div>
             </div>
         </header>
 
-        <div class="p-8 space-y-6 max-w-7xl mx-auto w-full">
+        <!-- Corpo com Rolagem e Layout 2 Colunas (Painel Esquerdo + Detalhes Direito) -->
+        <div class="flex-1 flex overflow-hidden">
+            
+            <div class="flex-1 overflow-y-auto p-6 space-y-6">
 
-            <!-- KPIS EXECUTIVOS -->
-            <div class="grid grid-cols-2 md:grid-cols-6 gap-3">
-                <div class="bg-white p-4 rounded-xl shadow-sm border border-kn-border border-l-4 border-l-kn-navy">
-                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Total</span>
-                    <div id="kpiTotal" class="text-xl font-black text-slate-800 mt-1">0</div>
+                <!-- Barra de Pesquisa Superior -->
+                <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 flex items-center space-x-3">
+                    <div class="relative flex-1">
+                        <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5"></i>
+                        <input type="text" id="globalSearchInput" placeholder="Digite um ID, rota, bairro, cidade ou placa..." class="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-xs focus:ring-2 focus:ring-blue-500 focus:outline-none font-medium">
+                    </div>
+                    <button onclick="executarBuscaGlobal()" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2.5 rounded-lg text-xs font-bold transition shadow-sm flex items-center space-x-2">
+                        <span>Consultar</span>
+                    </button>
                 </div>
-                <div class="bg-white p-4 rounded-xl shadow-sm border border-kn-border border-l-4 border-l-sky-500">
-                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Despachar</span>
-                    <div id="kpiDespachar" class="text-xl font-black text-sky-600 mt-1">0</div>
-                </div>
-                <div class="bg-white p-4 rounded-xl shadow-sm border border-kn-border border-l-4 border-l-emerald-500">
-                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Em Rota</span>
-                    <div id="kpiEmRota" class="text-xl font-black text-emerald-600 mt-1">0</div>
-                </div>
-                <div class="bg-white p-4 rounded-xl shadow-sm border border-kn-border border-l-4 border-l-amber-500">
-                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">No Piso</span>
-                    <div id="kpiPiso" class="text-xl font-black text-amber-600 mt-1">0</div>
-                </div>
-                <div class="bg-white p-4 rounded-xl shadow-sm border border-kn-border border-l-4 border-l-rose-500">
-                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Falha Entrega</span>
-                    <div id="kpiFalha" class="text-xl font-black text-rose-600 mt-1">0</div>
-                </div>
-                <div class="bg-white p-4 rounded-xl shadow-sm border border-kn-border border-l-4 border-l-purple-500">
-                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Solução Prob.</span>
-                    <div id="kpiSolucao" class="text-xl font-black text-purple-600 mt-1">0</div>
-                </div>
-            </div>
 
-            <!-- ================= ABA 1: BIPAGEM INTELIGENTE ================= -->
-            <section id="aba-operacao" class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <div class="space-y-6">
-                    <div class="bg-white p-6 rounded-xl shadow-sm border border-kn-border space-y-5">
-                        <div class="flex justify-between items-center border-b border-slate-100 pb-3">
-                            <h2 class="text-xs font-bold text-kn-navy uppercase tracking-wider">Leitor Óptico</h2>
-                            <span id="badge-ciclo" class="text-[10px] bg-kn-navy text-white px-2.5 py-1 rounded font-mono font-bold">CICLO AM</span>
+                <!-- CARDS DE KPIS EXATOS DA IMAGEM -->
+                <div class="grid grid-cols-5 gap-4">
+                    <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 border-l-4 border-l-blue-600">
+                        <div class="flex items-center space-x-2 text-slate-500 text-xs font-semibold mb-1">
+                            <i data-lucide="package" class="w-4 h-4 text-blue-600"></i>
+                            <span>Total de IDs</span>
                         </div>
-                        <div id="feedbackAlerta" class="hidden p-3 rounded-lg text-xs font-medium border shadow-sm"></div>
-                        <div class="space-y-4">
-                            <div>
-                                <label class="text-xs font-semibold text-slate-600 uppercase tracking-wide">Código de Barras</label>
-                                <input type="text" id="barcodeInput" autofocus placeholder="Aguardando leitura..." class="w-full p-3 border border-slate-300 rounded-lg font-mono text-sm focus:ring-2 focus:ring-kn-navy focus:outline-none bg-slate-50 mt-1">
-                            </div>
-                            <div class="grid grid-cols-2 gap-3 pt-3 border-t border-slate-100">
-                                <div>
-                                    <label class="text-xs font-semibold text-slate-600">Rota / Gaiola:</label>
-                                    <input type="text" id="atribuicaoInput" placeholder="Ex: Gaiola 01" class="w-full p-2.5 border border-slate-300 rounded-lg text-xs mt-1 bg-slate-50">
-                                </div>
-                                <div>
-                                    <label class="text-xs font-semibold text-slate-600">Ciclo Ativo:</label>
-                                    <select id="selectCiclo" onchange="atualizarCicloBadge()" class="w-full p-2.5 border border-slate-300 rounded-lg text-xs mt-1 bg-white font-bold text-kn-navy">
-                                        <option value="AM">AM</option>
-                                        <option value="PM">PM</option>
-                                    </select>
-                                </div>
-                            </div>
+                        <div class="text-2xl font-black text-slate-900 tracking-tight">4.093</div>
+                        <span class="text-[10px] text-slate-400 font-medium">100%</span>
+                    </div>
+
+                    <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 border-l-4 border-l-amber-400">
+                        <div class="flex items-center space-x-2 text-slate-500 text-xs font-semibold mb-1">
+                            <i data-lucide="alert-circle" class="w-4 h-4 text-amber-500"></i>
+                            <span>Pendentes</span>
+                        </div>
+                        <div class="text-2xl font-black text-slate-900 tracking-tight">820</div>
+                        <span class="text-[10px] text-amber-600 font-bold">20,0%</span>
+                    </div>
+
+                    <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 border-l-4 border-l-rose-500">
+                        <div class="flex items-center space-x-2 text-slate-500 text-xs font-semibold mb-1">
+                            <i data-lucide="shield-alert" class="w-4 h-4 text-rose-500"></i>
+                            <span>Problem Solving</span>
+                        </div>
+                        <div class="text-2xl font-black text-slate-900 tracking-tight">147</div>
+                        <span class="text-[10px] text-rose-600 font-bold">3,6%</span>
+                    </div>
+
+                    <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 border-l-4 border-l-indigo-600">
+                        <div class="flex items-center space-x-2 text-slate-500 text-xs font-semibold mb-1">
+                            <i data-lucide="truck" class="w-4 h-4 text-indigo-600"></i>
+                            <span>Rotas</span>
+                        </div>
+                        <div class="text-2xl font-black text-slate-900 tracking-tight">126</div>
+                        <span class="text-[10px] text-slate-400 font-medium">-</span>
+                    </div>
+
+                    <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 border-l-4 border-l-emerald-500">
+                        <div class="flex items-center space-x-2 text-slate-500 text-xs font-semibold mb-1">
+                            <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-500"></i>
+                            <span>Reatribuições</span>
+                        </div>
+                        <div class="text-2xl font-black text-slate-900 tracking-tight">3.126</div>
+                        <span class="text-[10px] text-emerald-600 font-bold">76,4%</span>
+                    </div>
+                </div>
+
+                <!-- SEÇÃO DE FILTROS -->
+                <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 space-y-4">
+                    <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                        <div class="flex items-center space-x-2 text-xs font-bold text-slate-800 uppercase tracking-wider">
+                            <i data-lucide="filter" class="w-4 h-4 text-blue-600"></i>
+                            <span>Filtros</span>
+                        </div>
+                        <button class="text-xs text-blue-600 font-semibold hover:underline flex items-center space-x-1">
+                            <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
+                            <span>Limpar filtros</span>
+                        </button>
+                    </div>
+
+                    <div class="grid grid-cols-5 gap-3">
+                        <div>
+                            <label class="text-[11px] font-semibold text-slate-500 mb-1 block">Data</label>
+                            <select class="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-xs font-medium"><option>Todos</option></select>
+                        </div>
+                        <div>
+                            <label class="text-[11px] font-semibold text-slate-500 mb-1 block">Ciclo</label>
+                            <select class="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-xs font-medium"><option>Todos</option></select>
+                        </div>
+                        <div>
+                            <label class="text-[11px] font-semibold text-slate-500 mb-1 block">Cluster</label>
+                            <select class="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-xs font-medium"><option>Todos</option></select>
+                        </div>
+                        <div>
+                            <label class="text-[11px] font-semibold text-slate-500 mb-1 block">Status</label>
+                            <select class="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-xs font-medium"><option>Todos</option></select>
+                        </div>
+                        <div>
+                            <label class="text-[11px] font-semibold text-slate-500 mb-1 block">Promessa</label>
+                            <select class="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-xs font-medium"><option>Todos</option></select>
+                        </div>
+                        <div>
+                            <label class="text-[11px] font-semibold text-slate-500 mb-1 block">Cidade</label>
+                            <select class="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-xs font-medium"><option>Todos</option></select>
+                        </div>
+                        <div>
+                            <label class="text-[11px] font-semibold text-slate-500 mb-1 block">Bairro</label>
+                            <select class="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-xs font-medium"><option>Todos</option></select>
+                        </div>
+                        <div>
+                            <label class="text-[11px] font-semibold text-slate-500 mb-1 block">Transportadora</label>
+                            <select class="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-xs font-medium"><option>Todos</option></select>
+                        </div>
+                        <div>
+                            <label class="text-[11px] font-semibold text-slate-500 mb-1 block">Rota</label>
+                            <select class="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-xs font-medium"><option>Todos</option></select>
                         </div>
                     </div>
                 </div>
 
-                <!-- Tabela de Histórico -->
-                <div class="bg-white p-6 rounded-xl shadow-sm border border-kn-border lg:col-span-2 space-y-4">
-                    <div class="flex justify-between items-center border-b border-slate-100 pb-3">
-                        <h2 class="text-xs font-bold text-kn-navy uppercase tracking-wider">Histórico de Movimentações</h2>
-                        <span id="contadorBips" class="text-xs font-semibold bg-slate-100 text-kn-navy px-3 py-1 rounded-full border">0 Pacotes</span>
+                <!-- GRÁFICOS ANALÍTICOS (3 Colunas Exatas da Imagem) -->
+                <div class="grid grid-cols-3 gap-6">
+                    <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between">
+                        <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wider mb-3">Pacotes por Cluster</h3>
+                        <div class="h-44 relative flex items-center justify-center">
+                            <canvas id="chartCluster"></canvas>
+                        </div>
                     </div>
-                    <div class="overflow-x-auto max-h-[480px]">
+                    
+                    <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between">
+                        <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wider mb-3">Status dos Pacotes</h3>
+                        <div class="h-44 relative flex items-center justify-center">
+                            <canvas id="chartStatus"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between">
+                        <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wider mb-3">Promessa x Quantidade</h3>
+                        <div class="h-44 relative flex items-center justify-center">
+                            <canvas id="chartPromessa"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TABELA DE PACOTES PARA REATRIBUIÇÃO -->
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+                    <div class="p-4 border-b border-slate-200 flex items-center justify-between bg-slate-50/50">
+                        <div class="flex items-center space-x-3">
+                            <span class="text-xs font-bold text-slate-800 uppercase tracking-wider">Pacotes para Reatribuição</span>
+                            <span class="bg-blue-100 text-blue-700 text-[10px] font-bold px-2.5 py-0.5 rounded-full">820 registros</span>
+                        </div>
+                    </div>
+
+                    <div class="overflow-x-auto">
                         <table class="w-full text-left text-xs">
-                            <thead class="bg-slate-100 text-slate-600 font-bold uppercase border-b sticky top-0">
+                            <thead class="bg-slate-100 text-slate-600 font-bold uppercase border-b border-slate-200">
                                 <tr>
-                                    <th class="p-3">Pacote / ID</th>
-                                    <th class="p-3">Rota / Gaiola</th>
-                                    <th class="p-3">Ciclo</th>
-                                    <th class="p-3">Status</th>
-                                    <th class="p-3">Hora</th>
+                                    <th class="p-3.5 w-10 text-center"><input type="checkbox" class="rounded border-slate-300"></th>
+                                    <th class="p-3.5">ID</th>
+                                    <th class="p-3.5">Cidade</th>
+                                    <th class="p-3.5">Bairro</th>
+                                    <th class="p-3.5">Cluster</th>
+                                    <th class="p-3.5">Promessa</th>
+                                    <th class="p-3.5">Status</th>
+                                    <th class="p-3.5">Rota Sugerida</th>
+                                    <th class="p-3.5">Transportadora</th>
+                                    <th class="p-3.5 text-center">Ações</th>
                                 </tr>
                             </thead>
-                            <tbody id="tabelaHistorico" class="divide-y divide-slate-100 font-mono"></tbody>
+                            <tbody id="tabelaPacotesReatribuicao" class="divide-y divide-slate-100 font-mono text-[11px]">
+                                <!-- Preenchido dinamicamente via JS -->
+                            </tbody>
                         </table>
                     </div>
-                </div>
-            </section>
 
-            <!-- ================= ABA 2: RESUMO POR ROTA ================= -->
-            <section id="aba-rotas" class="hidden bg-white p-6 rounded-xl shadow-sm border border-kn-border space-y-4">
-                <h2 class="text-xs font-bold text-kn-navy uppercase tracking-wider border-b pb-3">Resumo Agrupado por Rota</h2>
-                <div class="overflow-x-auto">
-                    <table class="w-full text-left text-xs">
-                        <thead class="bg-slate-100 text-slate-600 font-bold uppercase border-b">
-                            <tr>
-                                <th class="p-3">Rota</th>
-                                <th class="p-3">Total Pacotes</th>
-                                <th class="p-3">Em Rota</th>
-                                <th class="p-3">No Piso</th>
-                                <th class="p-3">Despachar</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tabelaRotas" class="divide-y divide-slate-100 font-mono"></tbody>
-                    </table>
-                </div>
-            </section>
-
-            <!-- ================= ABA 3: PIPELINE PYTHON & PANDAS ================= -->
-            <section id="aba-python-engine" class="hidden bg-white p-6 rounded-xl shadow-sm border border-emerald-200 space-y-4 bg-emerald-50/10">
-                <div class="flex items-center justify-between border-b border-emerald-100 pb-3">
-                    <div class="flex items-center space-x-2">
-                        <i data-lucide="cpu" class="w-5 h-5 text-emerald-600"></i>
-                        <h2 class="text-xs font-bold text-emerald-900 uppercase tracking-wider">Módulo de Análise de Dados com Python (Pandas)</h2>
-                    </div>
-                    <span class="bg-emerald-600 text-white text-[10px] px-2 py-0.5 rounded font-mono font-bold">Backend Script Ready</span>
-                </div>
-                <p class="text-xs text-slate-600">
-                    Abaixo está o script oficial em Python utilizando as bibliotecas <strong>Pandas</strong> e <strong>NumPy</strong> configurado para processar os arquivos de log da operação Last Mile, remover duplicidades, agregar volumes por rota e gerar relatórios consolidados em Excel/CSV de forma automatizada:
-                </p>
-                <div class="relative">
-                    <pre class="bg-slate-900 text-emerald-400 p-4 rounded-lg font-mono text-[11px] overflow-x-auto leading-relaxed"><code># =====================================================================
-# KUEHNE+NAGEL - PIPELINE DE PROCESSAMENTO LAST MILE (PANDAS + NUMPY)
-# Desenvolvido para automação de reconciliação pós-sorting
-# =====================================================================
-import pandas as pd
-import numpy as np
-from datetime import datetime
-
-def processar_base_logistica(caminho_arquivo_csv):
-    # Carregando a base de dados exportada do sistema
-    df = pd.read_csv(caminho_arquivo_csv)
-    
-    # Limpeza e Tratamento de Dados (Data Cleaning)
-    df.drop_duplicates(subset=['id'], keep='last', inplace=True)
-    df['status'] = df['status'].fillna('NULO').str.upper()
-    df['rota'] = df['rota'].fillna('SEM ROTA').str.strip()
-    
-    # Agrupamento e Análise Estatística por Rota com Pandas
-    resumo_rotas = df.groupby(['ciclo', 'rota']).agg(
-        total_pacotes=('id', 'count'),
-        em_rota=('status', lambda x: (x == 'EM_ROTA_DE_ENTREGA').sum()),
-        no_piso=('status', lambda x: (x == 'FICOU_NO_PISO').sum()),
-        falhas=('status', lambda x: (x == 'FALHA_NA_ENTREGA').sum())
-    ).reset_index()
-    
-    # Ordenação por volume total de pacotes
-    resumo_rotas = resumo_rotas.sort_values(by='total_pacotes', ascending=False)
-    
-    # Exportação de Relatórios Tratados
-    timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
-    nome_relatorio = f"relatorio_analítico_last_mile_{timestamp}.xlsx"
-    
-    with pd.ExcelWriter(nome_relatorio, engine='openpyxl') as writer:
-        df.to_excel(writer, sheet_name='Base Tratada', index=False)
-        resumo_rotas.to_excel(writer, sheet_name='KPIs por Rota', index=False)
-        
-    print(f"[SUCESSO] Relatório gerado e processado via Pandas: {nome_relatorio}")
-    return resumo_rotas
-
-# Exemplo de execução local:
-# processar_base_logistica('dados_bipagem.csv')</code></pre>
-                </div>
-            </section>
-
-            <!-- ================= ABA 4: BI / GRÁFICOS ================= -->
-            <section id="aba-graficos-geral" class="hidden space-y-6">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="bg-white p-5 rounded-xl border border-kn-border shadow-sm">
-                        <h3 class="text-xs font-bold text-kn-navy uppercase tracking-wider mb-4">Distribuição Geral de Status</h3>
-                        <canvas id="chartGeralStatus" class="max-h-64"></canvas>
-                    </div>
-                    <div class="bg-white p-5 rounded-xl border border-kn-border shadow-sm">
-                        <h3 class="text-xs font-bold text-kn-navy uppercase tracking-wider mb-4">Volume Ciclo AM vs PM</h3>
-                        <canvas id="chartGeralCiclos" class="max-h-64"></canvas>
+                    <!-- Paginação -->
+                    <div class="p-4 border-t border-slate-200 flex items-center justify-between text-xs font-medium text-slate-600 bg-white">
+                        <div class="flex items-center space-x-1">
+                            <button onclick="carregarPagina('prev')" class="p-1.5 hover:bg-slate-100 rounded border border-slate-200 text-slate-500"><i data-lucide="chevron-left" class="w-4 h-4"></i></button>
+                            <button class="px-3 py-1 bg-blue-600 text-white rounded font-bold">1</button>
+                            <button class="px-3 py-1 hover:bg-slate-100 rounded">2</button>
+                            <button class="px-3 py-1 hover:bg-slate-100 rounded">3</button>
+                            <button class="px-3 py-1 hover:bg-slate-100 rounded">4</button>
+                            <button class="px-3 py-1 hover:bg-slate-100 rounded">5</button>
+                            <span class="px-2">...</span>
+                            <button class="px-3 py-1 hover:bg-slate-100 rounded">82</button>
+                            <button onclick="carregarPagina('next')" class="p-1.5 hover:bg-slate-100 rounded border border-slate-200 text-slate-500"><i data-lucide="chevron-right" class="w-4 h-4"></i></button>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <span>Itens por página:</span>
+                            <select class="p-1.5 border border-slate-200 rounded bg-slate-50 font-sans text-xs"><option>10</option></select>
+                        </div>
                     </div>
                 </div>
-            </section>
+
+            </div>
+
+            <!-- ================= PAINEL LATERAL DIREITO (DETALHE DO PACOTE EXATO DA IMAGEM) ================= -->
+            <aside class="w-96 bg-white border-l border-slate-200 flex flex-col justify-between shadow-lg overflow-y-auto z-10">
+                <div class="p-5 space-y-5">
+                    
+                    <!-- Cabeçalho do Detalhe -->
+                    <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                        <h2 class="text-xs font-extrabold text-slate-800 uppercase tracking-wider">Detalhe do Pacote</h2>
+                        <button class="text-slate-400 hover:text-slate-600"><i data-lucide="x" class="w-4 h-4"></i></button>
+                    </div>
+
+                    <!-- Input ID busca rápida no painel -->
+                    <div class="space-y-1">
+                        <label class="text-[11px] font-bold text-slate-600">ID</label>
+                        <div class="flex space-x-2">
+                            <input type="text" id="detalheIdInput" value="12345678" class="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-xs font-mono font-bold text-slate-800 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                            <button onclick="buscarDetalhePainel()" class="bg-slate-900 hover:bg-slate-800 text-white px-3 py-2 rounded-lg text-xs transition"><i data-lucide="search" class="w-3.5 h-3.5"></i></button>
+                        </div>
+                    </div>
+
+                    <!-- Card Status e Badge Mercado Livre -->
+                    <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 space-y-3">
+                        <div class="flex items-center justify-between">
+                            <span class="bg-amber-100 text-amber-800 text-[10px] font-bold px-2.5 py-1 rounded-md flex items-center gap-1.5">
+                                <span class="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"></span> Pendente
+                            </span>
+                            <div class="flex items-center space-x-1.5 bg-white px-2.5 py-1 rounded-md border border-slate-200 shadow-sm">
+                                <div class="w-2 h-2 rounded-full bg-meli-yellow"></div>
+                                <span class="text-[10px] font-black tracking-tight text-slate-800">Mercado Livre</span>
+                            </div>
+                        </div>
+                        <div class="text-sm font-black text-slate-900 font-mono tracking-tight">ID: 12345678</div>
+                    </div>
+
+                    <!-- Localização -->
+                    <div class="space-y-2">
+                        <span class="text-[11px] font-bold text-slate-500 uppercase tracking-wider block">Localização</span>
+                        <div class="bg-slate-50 p-3 rounded-xl border border-slate-200 space-y-2 text-xs font-medium">
+                            <div class="flex items-center justify-between"><span class="text-slate-500 flex items-center gap-1.5"><i data-lucide="map-pin" class="w-3.5 h-3.5 text-blue-600"></i> Cidade:</span> <span class="font-bold text-slate-800">Queimados</span></div>
+                            <div class="flex items-center justify-between"><span class="text-slate-500 flex items-center gap-1.5"><i data-lucide="map" class="w-3.5 h-3.5 text-blue-600"></i> Bairro:</span> <span class="font-bold text-slate-800">Centro</span></div>
+                            <div class="flex items-center justify-between"><span class="text-slate-500 flex items-center gap-1.5"><i data-lucide="layers" class="w-3.5 h-3.5 text-blue-600"></i> Cluster:</span> <span class="font-bold text-slate-800">R6</span></div>
+                            <div class="flex items-center justify-between"><span class="text-slate-500 flex items-center gap-1.5"><i data-lucide="compass" class="w-3.5 h-3.5 text-blue-600"></i> CEP:</span> <span class="font-bold text-slate-800 font-mono">26385-000</span></div>
+                        </div>
+                    </div>
+
+                    <!-- Operação -->
+                    <div class="space-y-2">
+                        <span class="text-[11px] font-bold text-slate-500 uppercase tracking-wider block">Operação</span>
+                        <div class="bg-slate-50 p-3 rounded-xl border border-slate-200 space-y-2 text-xs font-medium">
+                            <div class="flex items-center justify-between"><span class="text-slate-500 flex items-center gap-1.5"><i data-lucide="alert-circle" class="w-3.5 h-3.5 text-amber-500"></i> Status:</span> <span class="bg-amber-100 text-amber-800 px-2 py-0.5 rounded font-bold text-[10px]">Pendente</span></div>
+                            <div class="flex items-center justify-between"><span class="text-slate-500 flex items-center gap-1.5"><i data-lucide="tag" class="w-3.5 h-3.5 text-blue-600"></i> Descrição:</span> <span class="font-bold text-slate-800">Produto eletrônico</span></div>
+                            <div class="flex items-center justify-between"><span class="text-slate-500 flex items-center gap-1.5"><i data-lucide="calendar" class="w-3.5 h-3.5 text-blue-600"></i> Promessa:</span> <span class="font-bold text-slate-800 font-mono">09/09/2026</span></div>
+                            <div class="flex items-center justify-between"><span class="text-slate-500 flex items-center gap-1.5"><i data-lucide="truck" class="w-3.5 h-3.5 text-blue-600"></i> Rota atual:</span> <span class="font-bold text-slate-800 font-mono">A25_PM1</span></div>
+                            <div class="flex items-center justify-between"><span class="text-slate-500 flex items-center gap-1.5"><i data-lucide="box" class="w-3.5 h-3.5 text-blue-600"></i> Transportadora:</span> <span class="font-bold text-slate-800">Mercado Livre</span></div>
+                        </div>
+                    </div>
+
+                    <!-- Recomendação -->
+                    <div class="bg-emerald-50/60 p-4 rounded-xl border border-emerald-200 space-y-3 shadow-sm">
+                        <div class="flex items-center space-x-2 text-emerald-800 text-xs font-bold uppercase tracking-wider">
+                            <i data-lucide="sparkles" class="w-4 h-4 text-emerald-600"></i>
+                            <span>Recomendação</span>
+                        </div>
+                        <div class="space-y-1.5 text-xs font-medium text-slate-700">
+                            <div class="flex items-center justify-between"><span class="text-slate-500">Gaiola sugerida:</span> <span class="font-bold font-mono text-emerald-700">G-034</span></div>
+                            <div class="flex items-center justify-between"><span class="text-slate-500">Rota sugerida:</span> <span class="font-bold font-mono text-emerald-700">A27_PM1</span></div>
+                            <div class="flex items-center justify-between"><span class="text-slate-500">Cluster:</span> <span class="font-bold font-mono text-slate-800">R6</span></div>
+                            <div class="flex items-center justify-between"><span class="text-slate-500">Bairro:</span> <span class="font-bold text-slate-800">Centro</span></div>
+                        </div>
+                        <button onclick="confirmarReatribuicao()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 rounded-lg text-xs flex items-center justify-center space-x-2 transition shadow-sm">
+                            <i data-lucide="check" class="w-4 h-4"></i>
+                            <span>Confirmar Reatribuição</span>
+                        </button>
+                    </div>
+
+                    <!-- Histórico do ID -->
+                    <div class="space-y-3 pt-2">
+                        <span class="text-[11px] font-bold text-slate-500 uppercase tracking-wider block flex items-center gap-1.5">
+                            <i data-lucide="clock" class="w-3.5 h-3.5"></i> Histórico do ID
+                        </span>
+                        <div class="space-y-3 text-[11px] text-slate-600 border-l-2 border-slate-200 pl-3 ml-1 font-mono">
+                            <div class="relative">
+                                <span class="text-slate-400 block text-[10px]">05/09 10:24</span>
+                                <span class="font-semibold text-slate-800">Inclusão na base</span>
+                            </div>
+                            <div class="relative">
+                                <span class="text-slate-400 block text-[10px]">05/09 12:37</span>
+                                <span class="font-semibold text-slate-800">Status alterado para Pendente</span>
+                            </div>
+                            <div class="relative">
+                                <span class="text-slate-400 block text-[10px]">05/09 14:02</span>
+                                <span class="font-semibold text-slate-800">Sugerida reatribuição</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </aside>
 
         </div>
     </main>
 
-    <!-- ================= SCRIPT DE CONTROLE JAVASCRIPT ================= -->
+    <!-- ================= SCRIPT DE SUPORTE E GRÁFICOS (CHART.JS) ================= -->
     <script>
-        let pacotes = JSON.parse(localStorage.getItem('kn_pacotes')) || [];
-        let charts = {};
+        const pacotesLista = [
+            { id: '12345678', cidade: 'Queimados', bairro: 'Centro', cluster: 'R6', promessa: '09/09/2026', status: 'Pendente', rotaSugerida: 'A25_PM1', transportadora: 'Mercado Livre' },
+            { id: '12345679', cidade: 'Japeri', bairro: 'Vila de Cava', cluster: '6', promessa: '09/09/2026', status: 'At Station', rotaSugerida: 'A26_PM1', transportadora: 'Mercado Livre' },
+            { id: '12345680', cidade: 'Nova Iguaçu', bairro: 'Tinguá', cluster: 'R10', promessa: '10/09/2026', status: 'Problem Solving', rotaSugerida: 'A30_AM1', transportadora: 'DHL' },
+            { id: '12345681', cidade: 'Queimados', bairro: 'Centro', cluster: '10', promessa: '09/09/2026', status: 'Pendente', rotaSugerida: 'A31_PM1', transportadora: 'Mercado Livre' },
+            { id: '12345682', cidade: 'Seropédica', bairro: 'Santa Rita', cluster: 'R6', promessa: '11/09/2026', status: 'Em trânsito', rotaSugerida: 'A28_PM1', transportadora: 'Jadlog' },
+            { id: '12345683', cidade: 'Itaguaí', bairro: 'Jardim América', cluster: 'R10', promessa: '12/09/2026', status: 'At Station', rotaSugerida: 'A32_AM1', transportadora: 'DHL' },
+            { id: '12345684', cidade: 'Queimados', bairro: 'Parque Estoril', cluster: '6', promessa: '09/09/2026', status: 'Pendente', rotaSugerida: 'A25_PM1', transportadora: 'Mercado Livre' },
+            { id: '12345685', cidade: 'Nova Iguaçu', bairro: 'Vila de Cava', cluster: '10', promessa: '10/09/2026', status: 'Problem Solving', rotaSugerida: 'A30_AM1', transportadora: 'Jadlog' }
+        ];
 
         document.addEventListener('DOMContentLoaded', () => {
             lucide.createIcons();
-            atualizarCicloBadge();
             renderizarTabela();
-            atualizarKPIs();
-            renderizarResumoRotas();
-            
-            document.getElementById('barcodeInput').addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    processarBip(this.value.trim());
-                    this.value = '';
-                }
-            });
+            inicializarGraficos();
         });
 
         function mudarAba(abaId) {
-            ['aba-operacao', 'aba-rotas', 'aba-python-engine', 'aba-graficos-geral'].forEach(id => {
-                document.getElementById(id).classList.add('hidden');
+            document.querySelectorAll('aside nav button').forEach(btn => {
+                btn.classList.remove('bg-blue-600', 'text-white');
+                btn.classList.add('hover:bg-white/10', 'text-slate-300');
             });
-            document.getElementById(`aba-${abaId}`).classList.remove('hidden');
-            
-            document.querySelectorAll('nav button').forEach(btn => btn.classList.remove('bg-kn-blue', 'text-white'));
-            document.getElementById(`btn-aba-${abaId}`).classList.add('bg-kn-blue', 'text-white');
-            if(abaId === 'graficos-geral') renderizarGraficos();
-        }
-
-        function atualizarCicloBadge() {
-            const ciclo = document.getElementById('selectCiclo').value;
-            const badge = document.getElementById('badge-ciclo');
-            badge.innerText = `CICLO ${ciclo}`;
-            badge.className = `text-[10px] ${ciclo === 'AM' ? 'bg-amber-500' : 'bg-indigo-600'} text-white px-2.5 py-1 rounded font-mono font-bold`;
-        }
-
-        function processarBip(codigo) {
-            if (!codigo) return;
-            const ciclo = document.getElementById('selectCiclo').value;
-            const rota = document.getElementById('atribuicaoInput').value.trim() || 'Sem Rota';
-            const index = pacotes.findIndex(p => p.id === codigo);
-            const agora = new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-
-            if (index === -1) {
-                pacotes.unshift({ id: codigo, rota, ciclo, status: 'EM_ROTA_DE_ENTREGA', hora: agora });
-                exibirAlerta(`Pacote ${codigo} adicionado: EM ROTA`, 'sucesso');
-            } else {
-                pacotes[index].status = 'FICOU_NO_PISO';
-                pacotes[index].hora = agora;
-                if(rota !== 'Sem Rota') pacotes[index].rota = rota;
-                exibirAlerta(`Pacote ${codigo} atualizado: FICOU NO PISO`, 'aviso');
+            const btnAtivo = document.getElementById(`btn-aba-${abaId}`);
+            if(btnAtivo) {
+                btnAtivo.classList.remove('hover:bg-white/10', 'text-slate-300');
+                btnAtivo.classList.add('bg-blue-600', 'text-white');
             }
-            salvarEAtualizar();
-        }
-
-        function exibirAlerta(mensagem, tipo) {
-            const alerta = document.getElementById('feedbackAlerta');
-            alerta.className = `p-3 rounded-lg text-xs font-medium border block ${tipo === 'sucesso' ? 'bg-emerald-50 border-emerald-200 text-emerald-800' : 'bg-amber-50 border-amber-200 text-amber-800'}`;
-            alerta.innerText = mensagem;
-            setTimeout(() => alerta.classList.add('hidden'), 3500);
-        }
-
-        function salvarEAtualizar() {
-            localStorage.setItem('kn_pacotes', JSON.stringify(pacotes));
-            renderizarTabela();
-            atualizarKPIs();
-            renderizarResumoRotas();
-        }
-
-        function atualizarKPIs() {
-            document.getElementById('kpiTotal').innerText = pacotes.length;
-            document.getElementById('kpiDespachar').innerText = pacotes.filter(p => p.status === 'DESPACHAR').length;
-            document.getElementById('kpiEmRota').innerText = pacotes.filter(p => p.status === 'EM_ROTA_DE_ENTREGA').length;
-            document.getElementById('kpiPiso').innerText = pacotes.filter(p => p.status === 'FICOU_NO_PISO').length;
-            document.getElementById('kpiFalha').innerText = pacotes.filter(p => p.status === 'FALHA_NA_ENTREGA').length;
-            document.getElementById('kpiSolucao').innerText = pacotes.filter(p => p.status === 'SOLUCAO_DE_PROBLEMA').length;
-            document.getElementById('contadorBips').innerText = `${pacotes.length} Pacotes`;
         }
 
         function renderizarTabela() {
-            const tbody = document.getElementById('tabelaHistorico');
+            const tbody = document.getElementById('tabelaPacotesReatribuicao');
             tbody.innerHTML = '';
-            pacotes.forEach(p => {
+            pacotesLista.forEach(p => {
+                let statusClass = 'bg-amber-100 text-amber-800';
+                if(p.status === 'At Station') statusClass = 'bg-sky-100 text-sky-800';
+                if(p.status === 'Problem Solving') statusClass = 'bg-rose-100 text-rose-800';
+                if(p.status === 'Em trânsito') statusClass = 'bg-emerald-100 text-emerald-800';
+
                 tbody.innerHTML += `
-                    <tr class="hover:bg-slate-50 transition">
-                        <td class="p-3 font-bold text-kn-navy">${p.id}</td>
-                        <td class="p-3">${p.rota}</td>
-                        <td class="p-3"><span class="px-2 py-0.5 rounded text-[10px] font-bold ${p.ciclo === 'AM' ? 'bg-amber-100 text-amber-800' : 'bg-indigo-100 text-indigo-800'}">${p.ciclo}</span></td>
-                        <td class="p-3 font-semibold">${p.status}</td>
-                        <td class="p-3 text-slate-500">${p.hora}</td>
-                    </tr>`;
+                    <tr class="hover:bg-slate-50 transition border-b border-slate-100">
+                        <td class="p-3.5 text-center"><input type="checkbox" class="rounded border-slate-300"></td>
+                        <td class="p-3.5 font-bold text-slate-900">${p.id}</td>
+                        <td class="p-3.5">${p.cidade}</td>
+                        <td class="p-3.5">${p.bairro}</td>
+                        <td class="p-3.5">${p.cluster}</td>
+                        <td class="p-3.5">${p.promessa}</td>
+                        <td class="p-3.5"><span class="px-2.5 py-1 rounded font-bold text-[10px] ${statusClass}">${p.status}</span></td>
+                        <td class="p-3.5 font-bold text-blue-600">${p.rotaSugerida}</td>
+                        <td class="p-3.5">${p.transportadora}</td>
+                        <td class="p-3.5 text-center">
+                            <button onclick="selecionarPacote('${p.id}')" class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded text-[11px] font-bold transition shadow-sm">Ver</button>
+                        </td>
+                    </tr>
+                `;
             });
         }
 
-        function renderizarResumoRotas() {
-            const tbody = document.getElementById('tabelaRotas');
-            tbody.innerHTML = '';
-            const rotasMap = {};
-            
-            pacotes.forEach(p => {
-                if(!rotasMap[p.rota]) rotasMap[p.rota] = { total: 0, emRota: 0, piso: 0, despachar: 0 };
-                rotasMap[p.rota].total++;
-                if(p.status === 'EM_ROTA_DE_ENTREGA') rotasMap[p.rota].emRota++;
-                if(p.status === 'FICOU_NO_PISO') rotasMap[p.rota].piso++;
-                if(p.status === 'DESPACHAR') rotasMap[p.rota].despachar++;
-            });
-
-            for(let [rota, dados] of Object.entries(rotasMap)) {
-                tbody.innerHTML += `
-                    <tr class="hover:bg-slate-50">
-                        <td class="p-3 font-bold text-kn-navy">${rota}</td>
-                        <td class="p-3 font-semibold">${dados.total}</td>
-                        <td class="p-3 text-emerald-600">${dados.emRota}</td>
-                        <td class="p-3 text-amber-600">${dados.piso}</td>
-                        <td class="p-3 text-sky-600">${dados.despachar}</td>
-                    </tr>`;
-            }
+        function selecionarPacote(id) {
+            document.getElementById('detalheIdInput').value = id;
         }
 
-        function exportarCSV(filtroCiclo) {
-            let csv = 'ID,Rota,Ciclo,Status,Hora\n';
-            pacotes.filter(p => filtroCiclo === 'TODOS' || p.ciclo === filtroCiclo).forEach(p => {
-                csv += `${p.id},${p.rota},${p.ciclo},${p.status},${p.hora}\n`;
-            });
-            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            link.download = `pacotes_${filtroCiclo}.csv`;
-            link.click();
+        function confirmarReatribuicao() {
+            alert("Reatribuição confirmada com sucesso para a rota sugerida!");
         }
 
-        function limparBase() {
-            if(confirm("Deseja realmente zerar todos os dados salvos?")) {
-                pacotes = [];
-                salvarEAtualizar();
-            }
+        function executarBuscaGlobal() {
+            const val = document.getElementById('globalSearchInput').value;
+            if(val) alert(`Filtrando resultados para: ${val}`);
         }
 
-        function renderizarGraficos() {
-            if(charts.geralStatus) charts.geralStatus.destroy();
-            const ctx1 = document.getElementById('chartGeralStatus').getContext('2d');
-            charts.geralStatus = new Chart(ctx1, {
-                type: 'doughnut',
+        function buscarDetalhePainel() {
+            const val = document.getElementById('detalheIdInput').value;
+            alert(`Carregando dados para o ID: ${val}`);
+        }
+
+        function carregarPagina(dir) {
+            // Paginação simulada
+        }
+
+        function inicializarGraficos() {
+            // 1. Gráfico Pacotes por Cluster (Barreiras Horizontais)
+            const ctxCluster = document.getElementById('chartCluster').getContext('2d');
+            new Chart(ctxCluster, {
+                type: 'bar',
                 data: {
-                    labels: ['Em Rota', 'No Piso', 'Despachar', 'Falha'],
+                    labels: ['Cluster 6', 'Cluster R6', 'Cluster 10', 'Cluster R10', 'Outros'],
                     datasets: [{
-                        data: [
-                            pacotes.filter(p => p.status === 'EM_ROTA_DE_ENTREGA').length,
-                            pacotes.filter(p => p.status === 'FICOU_NO_PISO').length,
-                            pacotes.filter(p => p.status === 'DESPACHAR').length,
-                            pacotes.filter(p => p.status === 'FALHA_NA_ENTREGA').length
-                        ],
-                        backgroundColor: ['#10B981', '#F59E0B', '#0EA5E9', '#EF4444']
+                        data: [820, 640, 510, 430, 693],
+                        backgroundColor: ['#3483FA', '#F97316', '#10B981', '#8B5CF6', '#94A3B8'],
+                        borderRadius: 4
                     }]
                 },
-                options: { responsive: true, maintainAspectRatio: false }
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: { x: { grid: { display: false } }, y: { grid: { display: false } } }
+                }
+            });
+
+            // 2. Gráfico Status dos Pacotes (Doughnut)
+            const ctxStatus = document.getElementById('chartStatus').getContext('2d');
+            new Chart(ctxStatus, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Em trânsito', 'At Station', 'Problem Solving', 'Pendente', 'Outros'],
+                    datasets: [{
+                        data: [540, 210, 147, 380, 2816],
+                        backgroundColor: ['#3483FA', '#10B981', '#EF4444', '#F59E0B', '#94A3B8']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { position: 'right', labels: { boxWidth: 10, font: { size: 10 } } } }
+                }
+            });
+
+            // 3. Gráfico Promessa x Quantidade (Linha)
+            const ctxPromessa = document.getElementById('chartPromessa').getContext('2d');
+            new Chart(ctxPromessa, {
+                type: 'line',
+                data: {
+                    labels: ['08/09', '09/09', '10/09', '11/09', '12/09', '13/09', '14/09'],
+                    datasets: [{
+                        data: [250, 280, 400, 320, 240, 200, 180],
+                        borderColor: '#3483FA',
+                        backgroundColor: 'rgba(52, 131, 250, 0.1)',
+                        fill: true,
+                        tension: 0.3
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: { x: { grid: { display: false } }, y: { grid: { color: '#F1F5F9' } } }
+                }
             });
         }
     </script>
 </body>
 </html>
+
+```
